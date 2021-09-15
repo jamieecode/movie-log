@@ -1,33 +1,13 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { URL } from "../api/api";
-import Card from "../components/Card";
-
-const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+import Cards from "../components/Cards";
+import { categories } from "../api/api";
 
 const Home = () => {
-  const [movieNow, setMovieNow] = useState([]);
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(
-          `${URL}/now_playing/?api_key=${API_KEY}`
-        );
-
-        setMovieNow(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMovies();
-  }, []);
   return (
-    <section>
-      <h2>Now Playing</h2>
-      {movieNow.map((movie) => (
-        <Card key={movie.id} movie={movie} />
+    <>
+      {categories.map((category) => (
+        <Cards key={category} category={category} />
       ))}
-    </section>
+    </>
   );
 };
 

@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
 const MovieCard = styled.article`
   img {
-    width: 20%;
+    width: 100%;
   }
 `;
 
@@ -15,7 +14,6 @@ const Card = ({ movie }) => {
         alt={movie.title}
       />
       <h3>{movie.title}</h3>
-      <p>{movie.overview}</p>
     </MovieCard>
   );
 };
