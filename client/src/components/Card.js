@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 const MovieCard = styled.article`
+  margin: 1em;
   img {
-    width: 100%;
+    width: 15rem;
   }
 `;
 
