@@ -71,7 +71,7 @@ const Cards = ({ category }) => {
   return (
     <Container>
       <h2>{category}</h2>
-      {currentSlide}
+      {/* {currentSlide} */}
       <CardSection ref={slideRef}>
         {movies.map((movie) => (
           <Card key={movie.id} movie={movie} />
