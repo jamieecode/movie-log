@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GiFilmProjector } from "react-icons/gi";
 
 const Nav = styled.nav`
   display: flex;
@@ -27,7 +28,10 @@ const StyledLink = styled(Link)`
 const Navbar = () => {
   return (
     <Nav>
-      <h1>MOVIE LOG</h1>
+      <h1>
+        <GiFilmProjector />
+        MOVIE LOG
+      </h1>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/about">About</StyledLink>
       <StyledLink to="/create">Create</StyledLink>
