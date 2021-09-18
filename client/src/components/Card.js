@@ -3,7 +3,11 @@ import Rating from "./Rating";
 import styled from "styled-components";
 
 const MovieCard = styled.article`
-  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0.5em;
+  padding: 0 0.8em;
   img {
     width: 15rem;
     border-radius: 0.5em;
@@ -13,17 +17,19 @@ const MovieCard = styled.article`
 const Card = ({ movie }) => {
   const history = useHistory();
   const handleClick = () => {
-    history.push(`/${movie.id}`);
+    history.push(`/movies/${movie.id}`);
   };
 
   return (
     <MovieCard onClick={handleClick}>
-      <img
-        src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-        alt={movie.title}
-      />
-      <h3>{movie.title}</h3>
-      <Rating value={movie.vote_average} />
+      <div>
+        <img
+          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+          alt={movie.title}
+        />
+        <h3>{movie.title}</h3>
+      </div>
+      <Rating id={movie.id} value={movie.vote_average} />
     </MovieCard>
   );
 };

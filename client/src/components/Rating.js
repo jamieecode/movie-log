@@ -1,19 +1,33 @@
 import React from "react";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
+import styled from "styled-components";
+
+const StarRating = styled.div`
+  background-color: coral;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    background-color: gold;
+    padding: 0 0.5rem;
+    font-weight: bold;
+  }
+`;
+
+const getStar = (value, id) => {
+  switch (value) {
+    case 0:
+      return <BsStar key={id} />;
+    case 50:
+      return <BsStarHalf key={id} />;
+    case 100:
+      return <BsStarFill key={id} />;
+    default:
+      break;
+  }
+};
 
 const Rating = ({ value }) => {
-  const getStar = (value) => {
-    switch (value) {
-      case 0:
-        return <BsStar />;
-      case 50:
-        return <BsStarHalf />;
-      case 100:
-        return <BsStarFill />;
-      default:
-        break;
-    }
-  };
   const getStars = (value) => {
     const stars = [];
     const [whole, part] = parseFloat(value).toString().split(".");
@@ -24,10 +38,10 @@ const Rating = ({ value }) => {
     return stars;
   };
   return (
-    <div>
-      {getStars(value).map((value) => getStar(value))}
+    <StarRating>
+      {getStars(value).map((value, id) => getStar(value, id))}
       <span>{value}</span>
-    </div>
+    </StarRating>
   );
 };
 

@@ -1,16 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GiFilmProjector } from "react-icons/gi";
+import { RiMovie2Line } from "react-icons/ri";
 
 const Nav = styled.nav`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 1em 0;
-  background-color: gold;
+  background-color: #032541;
   font-size: 1.2rem;
   text-decoration: none;
+  h1 {
+    background-image: linear-gradient(
+      to left,
+      #01b4e4,
+      #00bed6,
+      #3ec5c3,
+      #69cbb0,
+      #8fcea1
+    );
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+  }
   ul {
     display: flex;
     justify-content: space-evenly;
@@ -22,14 +36,14 @@ const Nav = styled.nav`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: #01b4e4;
 `;
 
 const Navbar = () => {
   return (
     <Nav>
       <h1>
-        <GiFilmProjector />
+        <RiMovie2Line style={{ color: "#99C9A6", marginRight: "0.5rem" }} />
         MOVIE LOG
       </h1>
       <StyledLink to="/">Home</StyledLink>
