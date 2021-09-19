@@ -3,6 +3,7 @@ import axios from "axios";
 import { base_URL, API_KEY } from "../api/api";
 import Card from "../components/Card";
 import styled from "styled-components";
+import Skeleton from "./Skeleton";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 const Container = styled.section`
@@ -45,12 +46,12 @@ const Button = styled.button`
 
 const Cards = ({ category }) => {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const response = await axios.get(
           `${base_URL}/${category}/?api_key=${API_KEY}`
         );
@@ -58,7 +59,7 @@ const Cards = ({ category }) => {
       } catch (error) {
         console.log(error);
       }
-      setLoading(false);
+      setIsLoading(false);
     };
     fetchMovies();
   }, [category]);
@@ -98,16 +99,15 @@ const Cards = ({ category }) => {
 
   return (
     <Container>
-      {loading ? (
-        <h1>Loading...</h1>
+      {isLoading ? (
+        <Skeleton />
       ) : (
         <>
+          {" "}
           <h2>{categoryBar(category)}</h2>
-
           <CardSection ref={slideRef}>
-            {movies.map((movie) => (
-              <Card key={movie.id} movie={movie} />
-            ))}
+            {movies.length > 0 &&
+              movies.map((movie) => <Card key={movie.id} movie={movie} />)}
           </CardSection>
           <Button onClick={prevSlide}>
             <RiArrowLeftSLine />
