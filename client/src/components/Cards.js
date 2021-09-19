@@ -10,6 +10,9 @@ const Container = styled.section`
   overflow: hidden;
   margin: 0 auto;
   position: relative;
+  h1 {
+    text-align: center;
+  }
 `;
 
 const CardSection = styled.section`
@@ -42,10 +45,12 @@ const Button = styled.button`
 
 const Cards = ({ category }) => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `${base_URL}/${category}/?api_key=${API_KEY}`
         );
@@ -53,6 +58,7 @@ const Cards = ({ category }) => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     };
     fetchMovies();
   }, [category]);
@@ -92,19 +98,25 @@ const Cards = ({ category }) => {
 
   return (
     <Container>
-      <h2>{categoryBar(category)}</h2>
-      {/* {currentSlide} */}
-      <CardSection ref={slideRef}>
-        {movies.map((movie) => (
-          <Card key={movie.id} movie={movie} />
-        ))}
-      </CardSection>
-      <Button onClick={prevSlide}>
-        <RiArrowLeftSLine />
-      </Button>
-      <Button onClick={nextSlide}>
-        <RiArrowRightSLine />
-      </Button>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <h2>{categoryBar(category)}</h2>
+
+          <CardSection ref={slideRef}>
+            {movies.map((movie) => (
+              <Card key={movie.id} movie={movie} />
+            ))}
+          </CardSection>
+          <Button onClick={prevSlide}>
+            <RiArrowLeftSLine />
+          </Button>
+          <Button onClick={nextSlide}>
+            <RiArrowRightSLine />
+          </Button>
+        </>
+      )}
     </Container>
   );
 };

@@ -8,9 +8,14 @@ const MovieCard = styled.article`
   justify-content: space-between;
   margin: 0.5em;
   padding: 0 0.8em;
+  cursor: pointer;
+  transition: 0.3s;
   img {
     width: 15rem;
     border-radius: 0.5em;
+  }
+  &: hover {
+    transform: translate(0, -0.7rem);
   }
 `;
 
