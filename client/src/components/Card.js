@@ -1,13 +1,14 @@
 import { useHistory } from "react-router";
 import Rating from "./Rating";
 import styled from "styled-components";
+import Skeleton from "./Skeleton";
 
 const MovieCard = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 0.5em;
-  padding: 0 0.8em;
+  padding: 0 0.6em;
   cursor: pointer;
   transition: 0.3s;
   img {
@@ -22,7 +23,7 @@ const MovieCard = styled.article`
 const Card = ({ movie }) => {
   const history = useHistory();
   const handleClick = () => {
-    history.push(`/movies/${movie.id}`);
+    history.push(`/movie/${movie.id}`);
   };
 
   return (

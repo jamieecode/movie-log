@@ -3,11 +3,10 @@ import axios from "axios";
 import { base_URL, API_KEY } from "../api/api";
 import Card from "../components/Card";
 import styled from "styled-components";
-import Skeleton from "./Skeleton";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 const Container = styled.section`
-  width: 90%;
+  width: 95%;
   overflow: hidden;
   margin: 0 auto;
   position: relative;
@@ -99,24 +98,19 @@ const Cards = ({ category }) => {
 
   return (
     <Container>
-      {isLoading ? (
-        <Skeleton />
-      ) : (
-        <>
-          {" "}
-          <h2>{categoryBar(category)}</h2>
-          <CardSection ref={slideRef}>
-            {movies.length > 0 &&
-              movies.map((movie) => <Card key={movie.id} movie={movie} />)}
-          </CardSection>
-          <Button onClick={prevSlide}>
-            <RiArrowLeftSLine />
-          </Button>
-          <Button onClick={nextSlide}>
-            <RiArrowRightSLine />
-          </Button>
-        </>
-      )}
+      <h2>{categoryBar(category)}</h2>
+      <CardSection ref={slideRef}>
+        {movies.length > 0 &&
+          movies.map((movie) => (
+            <Card key={movie.id} movie={movie} isLoading={isLoading} />
+          ))}
+      </CardSection>
+      <Button onClick={prevSlide}>
+        <RiArrowLeftSLine />
+      </Button>
+      <Button onClick={nextSlide}>
+        <RiArrowRightSLine />
+      </Button>
     </Container>
   );
 };

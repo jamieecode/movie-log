@@ -3,12 +3,10 @@ import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 import styled from "styled-components";
 
 const StarRating = styled.div`
-  background-color: coral;
   display: flex;
   justify-content: space-between;
   align-items: center;
   span {
-    background-color: gold;
     padding: 0 0.5rem;
     font-weight: bold;
   }
