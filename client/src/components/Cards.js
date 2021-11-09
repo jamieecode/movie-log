@@ -22,7 +22,7 @@ const CardSection = styled.section`
 
 const Button = styled.button`
   all: unset;
-  padding: 0.5em;  
+  padding: 0.5em;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1.2rem;

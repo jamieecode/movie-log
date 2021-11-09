@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { base_URL, API_KEY } from "../api/api";
 import styled from "styled-components";
@@ -21,27 +21,38 @@ const MovieDetail = ({ location }) => {
   const [movie, setMovie] = useState([]);
   const id = location.pathname.split("/")[2];
 
-  const fetchMovie = async () => {
-    try {
-      const response = await axios.get(`${base_URL}/${id}?api_key=${API_KEY}`);
-      const result = response.data;
-      setMovie(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  fetchMovie();
+  useEffect(() => {
+    const fetchMovie = async () => {
+      try {
+        const response = await axios.get(
+          `${base_URL}/${id}?api_key=${API_KEY}`
+        );
+        const result = response.data;
+        console.log(result);
+        setMovie(result);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchMovie();
+  }, []);
 
   return (
     <StyleMovieDetail>
       <img
-        src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
+            : ""
+        }
         alt={movie.title}
       />
       <div>
-        <h3>{movie.id}</h3>
         <h2>{movie.title}</h2>
+        <p>{movie.release_date}</p>
         <p>{movie.overview}</p>
+
+        <a href={movie.homepage}>{movie.homepage}</a>
       </div>
     </StyleMovieDetail>
   );

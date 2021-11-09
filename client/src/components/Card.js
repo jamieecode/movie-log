@@ -1,7 +1,6 @@
 import { useHistory } from "react-router";
 import Rating from "./Rating";
 import styled from "styled-components";
-import Skeleton from "./Skeleton";
 
 const MovieCard = styled.article`
   display: flex;
