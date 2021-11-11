@@ -1,60 +1,136 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { base_URL, API_KEY } from "../api/api";
+import { BASE_URL, API_KEY } from "../api/api";
 import styled from "styled-components";
 
-const StyleMovieDetail = styled.div`
+const StyleMovieDetailSection = styled.section`
   width: 80%;
-  background-color: coral;
+  // background-color: coral;
+  padding: 1em;
   display: flex;
-  margin: 0 auto;
+  flex-direction: column;
+  margin: 2em auto;
   img {
-    width: 12rem;
+    width: 15rem;
   }
+  h2 {
+    margin-top: 1em;
+  }
+`;
 
-  p {
-    width: 80%;
+const StyledMovieDetailInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 2em;
+  }
+`;
+
+const StyledCreditInfo = styled.section`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20%, auto));
+  //background-color: purple;
+  grid-gap: 1em;
+  article img {
+    width: 100%;
   }
 `;
 
 const MovieDetail = ({ location }) => {
   const [movie, setMovie] = useState([]);
+  const [credits, setCredits] = useState([]);
+
   const id = location.pathname.split("/")[2];
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const response = await axios.get(
-          `${base_URL}/${id}?api_key=${API_KEY}`
+        const { data } = await axios.get(
+          `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
         );
-        const result = response.data;
-        console.log(result);
-        setMovie(result);
+
+        setMovie(data);
+        console.log(data);
+        setCredits(data.credits);
+        //console.log(data.credits);
       } catch (error) {
         console.log(error);
       }
     };
     fetchMovie();
-  }, []);
+  }, [id]);
 
   return (
-    <StyleMovieDetail>
-      <img
-        src={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
-            : ""
-        }
-        alt={movie.title}
-      />
-      <div>
-        <h2>{movie.title}</h2>
-        <p>{movie.release_date}</p>
-        <p>{movie.overview}</p>
+    <StyleMovieDetailSection>
+      <StyledMovieDetailInfo>
+        <img
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
+              : ""
+          }
+          alt={movie.title}
+        />
+        <div>
+          <h1>
+            {movie.title}(
+            {movie.release_date && movie.release_date.split("-")[0]})
+          </h1>
+          <h4>
+            {movie.genres &&
+              movie.genres.map((genre) => (
+                <span key={genre.name}>{genre.name} </span>
+              ))}
+          </h4>
+          <h4>{movie.runtime}m</h4>
+          <p>{movie.overview}</p>
 
-        <a href={movie.homepage}>{movie.homepage}</a>
-      </div>
-    </StyleMovieDetail>
+          <a href={movie.homepage}>{movie.homepage}</a>
+        </div>
+      </StyledMovieDetailInfo>
+      <h2>Cast</h2>
+      <StyledCreditInfo>
+        {credits?.cast?.map((c) => (
+          <article key={c.credit_id}>
+            {
+              <img
+                src={
+                  c.profile_path
+                    ? `https://image.tmdb.org/t/p/original${c.profile_path}`
+                    : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                }
+              />
+            }
+            <p>
+              {c.name} as {c.character}
+            </p>
+          </article>
+        ))}
+      </StyledCreditInfo>
+      <hr />
+      <h2>Crews</h2>
+      <StyledCreditInfo>
+        {credits?.crew?.map((c) => (
+          <article key={c.credit_id}>
+            {
+              <img
+                src={
+                  c.profile_path
+                    ? `https://image.tmdb.org/t/p/original${c.profile_path}`
+                    : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                }
+              />
+            }
+            <p>
+              {c.name} - {c.job}
+            </p>
+          </article>
+        ))}
+      </StyledCreditInfo>
+    </StyleMovieDetailSection>
   );
 };
 

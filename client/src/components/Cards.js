@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { base_URL, API_KEY } from "../api/api";
+import { BASE_URL, API_KEY } from "../api/api";
 import Card from "../components/Card";
 import styled from "styled-components";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
@@ -52,7 +52,7 @@ const Cards = ({ category }) => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `${base_URL}/${category}/?api_key=${API_KEY}`
+          `${BASE_URL}/${category}/?api_key=${API_KEY}`
         );
         setMovies(response.data.results);
       } catch (error) {
