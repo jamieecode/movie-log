@@ -16,6 +16,12 @@ const GlobalStyle = createGlobalStyle`
    padding-top: 2em;
  }
 
+ button {
+   background:none;
+   border: none;
+   cursor: pointer;
+ }
+
 `;
 
 export default GlobalStyle;

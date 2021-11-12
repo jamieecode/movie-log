@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL, API_KEY } from "../api/api";
 import styled from "styled-components";
+import Pagination from "../components/Pagination";
 
 const StyleMovieDetailSection = styled.section`
   width: 80%;
@@ -31,19 +32,28 @@ const StyledMovieDetailInfo = styled.div`
 
 const StyledCreditInfo = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20%, auto));
-  //background-color: purple;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 
   grid-gap: 1em;
-  article img {
-    width: 100%;
+  article img{
+    width: 90%;
+    
   }
 `;
 
 const MovieDetail = ({ location }) => {
   const [movie, setMovie] = useState([]);
-  const [credits, setCredits] = useState([]);
+  const [cast, setCast] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [castsPerPage] = useState(12);
 
   const id = location.pathname.split("/")[2];
+
+  //pagination
+  const indexOfLastCast = currentPage * castsPerPage;
+  const indexOfFirstCast = indexOfLastCast - castsPerPage;
+  const currentCasts = cast.slice(indexOfFirstCast, indexOfLastCast);
+  const paginate = (pageNum) => setCurrentPage(pageNum);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -51,11 +61,8 @@ const MovieDetail = ({ location }) => {
         const { data } = await axios.get(
           `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
         );
-
         setMovie(data);
-        console.log(data);
-        setCredits(data.credits);
-        //console.log(data.credits);
+        setCast(data.credits.cast);
       } catch (error) {
         console.log(error);
       }
@@ -93,7 +100,7 @@ const MovieDetail = ({ location }) => {
       </StyledMovieDetailInfo>
       <h2>Cast</h2>
       <StyledCreditInfo>
-        {credits?.cast?.map((c) => (
+        {currentCasts.map((c) => (
           <article key={c.credit_id}>
             {
               <img
@@ -102,6 +109,7 @@ const MovieDetail = ({ location }) => {
                     ? `https://image.tmdb.org/t/p/original${c.profile_path}`
                     : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
                 }
+                alt={c.credit_id}
               />
             }
             <p>
@@ -110,26 +118,11 @@ const MovieDetail = ({ location }) => {
           </article>
         ))}
       </StyledCreditInfo>
-      <hr />
-      <h2>Crews</h2>
-      <StyledCreditInfo>
-        {credits?.crew?.map((c) => (
-          <article key={c.credit_id}>
-            {
-              <img
-                src={
-                  c.profile_path
-                    ? `https://image.tmdb.org/t/p/original${c.profile_path}`
-                    : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
-                }
-              />
-            }
-            <p>
-              {c.name} - {c.job}
-            </p>
-          </article>
-        ))}
-      </StyledCreditInfo>
+      <Pagination
+        castsPerPage={castsPerPage}
+        totalCasts={cast.length}
+        paginate={paginate}
+      />
     </StyleMovieDetailSection>
   );
 };
