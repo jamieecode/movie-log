@@ -42,6 +42,7 @@ const StyledCreditInfo = styled.section`
 `;
 
 const MovieDetail = ({ location }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
   const [cast, setCast] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +62,7 @@ const MovieDetail = ({ location }) => {
         const { data } = await axios.get(
           `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
         );
+        setIsLoading(true);
         setMovie(data);
         setCast(data.credits.cast);
       } catch (error) {
@@ -68,61 +70,65 @@ const MovieDetail = ({ location }) => {
       }
     };
     fetchMovie();
+    return () => setIsLoading(false);
   }, [id]);
 
   return (
     <StyleMovieDetailSection>
-      <StyledMovieDetailInfo>
-        <img
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
-              : ""
-          }
-          alt={movie.title}
-        />
-        <div>
-          <h1>
-            {movie.title}(
-            {movie.release_date && movie.release_date.split("-")[0]})
-          </h1>
-          <h4>
-            {movie.genres &&
-              movie.genres.map((genre) => (
-                <span key={genre.name}>{genre.name} </span>
-              ))}
-          </h4>
-          <h4>{movie.runtime}m</h4>
-          <p>{movie.overview}</p>
-
-          <a href={movie.homepage}>{movie.homepage}</a>
-        </div>
-      </StyledMovieDetailInfo>
-      <h2>Cast</h2>
-      <StyledCreditInfo>
-        {currentCasts.map((c) => (
-          <article key={c.credit_id}>
-            {
-              <img
-                src={
-                  c.profile_path
-                    ? `https://image.tmdb.org/t/p/original${c.profile_path}`
-                    : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+      {isLoading && (
+        <>
+          <StyledMovieDetailInfo>
+            <img
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
+                  : ""
+              }
+              alt={movie.title}
+            />
+            <div>
+              <h1>
+                {movie.title}(
+                {movie.release_date && movie.release_date.split("-")[0]})
+              </h1>
+              <h4>
+                {movie.genres &&
+                  movie.genres.map((genre) => (
+                    <span key={genre.name}>{genre.name} </span>
+                  ))}
+              </h4>
+              <h4>{movie.runtime}m</h4>
+              <p>{movie.overview}</p>
+              <a href={movie.homepage}>{movie.homepage}</a>
+            </div>
+          </StyledMovieDetailInfo>
+          <h2>Cast</h2>
+          <StyledCreditInfo>
+            {currentCasts.map((c) => (
+              <article key={c.credit_id}>
+                {
+                  <img
+                    src={
+                      c.profile_path
+                        ? `https://image.tmdb.org/t/p/original${c.profile_path}`
+                        : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                    }
+                    alt={c.credit_id}
+                  />
                 }
-                alt={c.credit_id}
-              />
-            }
-            <p>
-              {c.name} as {c.character}
-            </p>
-          </article>
-        ))}
-      </StyledCreditInfo>
-      <Pagination
-        castsPerPage={castsPerPage}
-        totalCasts={cast.length}
-        paginate={paginate}
-      />
+                <p>
+                  {c.name} as {c.character}
+                </p>
+              </article>
+            ))}
+          </StyledCreditInfo>
+          <Pagination
+            castsPerPage={castsPerPage}
+            totalCasts={cast.length}
+            paginate={paginate}
+          />
+        </>
+      )}
     </StyleMovieDetailSection>
   );
 };

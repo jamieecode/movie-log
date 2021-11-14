@@ -50,17 +50,19 @@ const Cards = ({ category }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        setIsLoading(true);
         const response = await axios.get(
           `${BASE_URL}/${category}/?api_key=${API_KEY}`
         );
+        setIsLoading(true);
         setMovies(response.data.results);
       } catch (error) {
         console.log(error);
       }
-      setIsLoading(false);
     };
     fetchMovies();
+    return () => {
+      setIsLoading(false);
+    };
   }, [category]);
 
   const TOTAL_SLIDES = 4;
@@ -100,16 +102,15 @@ const Cards = ({ category }) => {
     <Container>
       <h2>{categoryBar(category)}</h2>
       <CardSection ref={slideRef}>
-        {movies.length > 0 &&
-          movies.map((movie) => (
-            <Card key={movie.id} movie={movie} isLoading={isLoading} />
-          ))}
+        {movies.map((movie) => (
+          <Card key={movie.id} movie={movie} isLoading={isLoading} />
+        ))}
       </CardSection>
       <Button onClick={prevSlide}>
         <RiArrowLeftSLine />
       </Button>
-      <Button onClick={nextSlide}>
-        <RiArrowRightSLine />
+      <Button>
+        <RiArrowRightSLine onClick={nextSlide} />
       </Button>
     </Container>
   );
