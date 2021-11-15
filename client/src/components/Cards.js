@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { BASE_URL, API_KEY } from "../api/api";
 import Card from "../components/Card";
 import styled from "styled-components";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import useFetch from "../hooks/useFetch";
 
 const Container = styled.section`
   width: 95%;
@@ -44,26 +44,9 @@ const Button = styled.button`
 `;
 
 const Cards = ({ category }) => {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/${category}/?api_key=${API_KEY}`
-        );
-        setIsLoading(true);
-        setMovies(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMovies();
-    return () => {
-      setIsLoading(false);
-    };
-  }, [category]);
+  const { data, loading, error } = useFetch(
+    `${BASE_URL}/${category}/?api_key=${API_KEY}`
+  );
 
   const TOTAL_SLIDES = 4;
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -98,12 +81,16 @@ const Cards = ({ category }) => {
     }
   };
 
+  if (loading) return <h1>LOADING...</h1>;
+
+  if (error) console.log(error);
+
   return (
     <Container>
       <h2>{categoryBar(category)}</h2>
       <CardSection ref={slideRef}>
-        {movies.map((movie) => (
-          <Card key={movie.id} movie={movie} isLoading={isLoading} />
+        {data?.results.map((movie) => (
+          <Card key={movie.id} movie={movie} />
         ))}
       </CardSection>
       <Button onClick={prevSlide}>

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { BASE_URL, API_KEY } from "../api/api";
 import styled from "styled-components";
 import Pagination from "../components/Pagination";
+import useFetch from "../hooks/useFetch";
 
-const StyleMovieDetailSection = styled.section`
+const StyledMovieInfoSection = styled.section`
   width: 80%;
   // background-color: coral;
   padding: 1em;
@@ -19,7 +19,7 @@ const StyleMovieDetailSection = styled.section`
   }
 `;
 
-const StyledMovieDetailInfo = styled.div`
+const StyledMovieInfoCard = styled.div`
   display: flex;
   justify-content: space-between;
   div {
@@ -41,67 +41,57 @@ const StyledCreditInfo = styled.section`
   }
 `;
 
-const MovieDetail = ({ location }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [movie, setMovie] = useState([]);
-  const [cast, setCast] = useState([]);
+const MovieInfo = ({ location }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [castsPerPage] = useState(12);
 
   const id = location.pathname.split("/")[2];
 
-  //pagination
+  const { data, error, loading } = useFetch(
+    `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
+  );
+
+  if (loading) return <h1>LOADING</h1>;
+  if (error) console.log(error);
+
+  //pagination;
   const indexOfLastCast = currentPage * castsPerPage;
   const indexOfFirstCast = indexOfLastCast - castsPerPage;
-  const currentCasts = cast.slice(indexOfFirstCast, indexOfLastCast);
+  const currentCasts = data?.credits.cast.slice(
+    indexOfFirstCast,
+    indexOfLastCast
+  );
   const paginate = (pageNum) => setCurrentPage(pageNum);
 
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const { data } = await axios.get(
-          `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
-        );
-        setIsLoading(true);
-        setMovie(data);
-        setCast(data.credits.cast);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchMovie();
-    return () => setIsLoading(false);
-  }, [id]);
-
   return (
-    <StyleMovieDetailSection>
-      {isLoading && (
+    <StyledMovieInfoSection>
+      {data && (
         <>
-          <StyledMovieDetailInfo>
+          <StyledMovieInfoCard>
             <img
               src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/original/${movie.poster_path} `
+                data.poster_path
+                  ? `https://image.tmdb.org/t/p/original/${data.poster_path} `
                   : ""
               }
-              alt={movie.title}
+              alt={data.title}
             />
             <div>
               <h1>
-                {movie.title}(
-                {movie.release_date && movie.release_date.split("-")[0]})
+                {data.title}(
+                {data.release_date && data.release_date.split("-")[0]})
               </h1>
               <h4>
-                {movie.genres &&
-                  movie.genres.map((genre) => (
+                {data.genres &&
+                  data.genres.map((genre) => (
                     <span key={genre.name}>{genre.name} </span>
                   ))}
               </h4>
-              <h4>{movie.runtime}m</h4>
-              <p>{movie.overview}</p>
-              <a href={movie.homepage}>{movie.homepage}</a>
+              <h4>{data.runtime}m</h4>
+              <p>{data.overview}</p>
+              <a href={data.homepage}>{data.homepage}</a>
             </div>
-          </StyledMovieDetailInfo>
+          </StyledMovieInfoCard>
           <h2>Cast</h2>
           <StyledCreditInfo>
             {currentCasts.map((c) => (
@@ -111,7 +101,7 @@ const MovieDetail = ({ location }) => {
                     src={
                       c.profile_path
                         ? `https://image.tmdb.org/t/p/original${c.profile_path}`
-                        : `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                        : `https://image.tmdb.org/t/p/original/${data.poster_path}`
                     }
                     alt={c.credit_id}
                   />
@@ -124,13 +114,13 @@ const MovieDetail = ({ location }) => {
           </StyledCreditInfo>
           <Pagination
             castsPerPage={castsPerPage}
-            totalCasts={cast.length}
+            totalCasts={data.credits.cast.length}
             paginate={paginate}
           />
         </>
       )}
-    </StyleMovieDetailSection>
+    </StyledMovieInfoSection>
   );
 };
 
-export default MovieDetail;
+export default MovieInfo;

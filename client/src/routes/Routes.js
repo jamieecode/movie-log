@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Create from "../pages/Create";
 import Read from "../pages/Read";
-import MovieDetail from "../pages/MovieDetail";
+import MovieInfo from "../pages/MovieInfo";
 import Navbar from "../components/Navbar";
 
 const Routes = () => {
@@ -16,7 +16,7 @@ const Routes = () => {
         <Route path="/about" component={About} />
         <Route path="/create" component={Create} />
         <Route path="/read" component={Read} />
-        <Route path="/movie/:id" component={MovieDetail} />
+        <Route path="/movie/:id" component={MovieInfo} />
         <Route
           render={({ location }) => (
             <div>
