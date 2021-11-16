@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import styled from "styled-components";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import useFetch from "../hooks/useFetch";
+import SkeletonCard from "./skeletons/SkeletonCard";
 
 const Container = styled.section`
   width: 95%;
@@ -44,7 +45,7 @@ const Button = styled.button`
 `;
 
 const Cards = ({ category }) => {
-  const { data, loading, error } = useFetch(
+  const { data, error } = useFetch(
     `${BASE_URL}/${category}/?api_key=${API_KEY}`
   );
 
@@ -81,17 +82,15 @@ const Cards = ({ category }) => {
     }
   };
 
-  if (loading) return <h1>LOADING...</h1>;
-
   if (error) console.log(error);
 
   return (
     <Container>
       <h2>{categoryBar(category)}</h2>
       <CardSection ref={slideRef}>
-        {data?.results.map((movie) => (
-          <Card key={movie.id} movie={movie} />
-        ))}
+        {data &&
+          data.results.map((movie) => <Card key={movie.id} movie={movie} />)}
+        {!data && [1, 2, 3, 4, 5].map((n) => <SkeletonCard key={n} />)}
       </CardSection>
       <Button onClick={prevSlide}>
         <RiArrowLeftSLine />
