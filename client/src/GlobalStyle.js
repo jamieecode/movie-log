@@ -4,22 +4,23 @@ const GlobalStyle = createGlobalStyle`
  * {
    margin:0;
    box-sizing: border-box;
-   padding:0
- }
-
-
- body {
+   padding:0;
    font-family: 'Poppins', sans-serif;
  }
 
- section {
-   padding-top: 2em;
- }
 
  button {
    background:none;
    border: none;
    cursor: pointer;
+ }
+
+ input {
+  border: none;
+ }
+
+ input:focus {
+   outline: none;
  }
 
 `;

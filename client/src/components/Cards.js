@@ -73,12 +73,12 @@ const Cards = ({ category }) => {
   }, [currentSlide]);
 
   const categoryBar = (category) => {
-    if (category === "now_playing") {
-      return "Now Playing";
-    } else if (category === "popular") {
+    if (category === "popular") {
       return "Popular";
-    } else {
+    } else if (category === "top_rated") {
       return "Top Rated";
+    } else {
+      return "Upcoming";
     }
   };
 
@@ -95,8 +95,8 @@ const Cards = ({ category }) => {
       <Button onClick={prevSlide}>
         <RiArrowLeftSLine />
       </Button>
-      <Button>
-        <RiArrowRightSLine onClick={nextSlide} />
+      <Button onClick={nextSlide}>
+        <RiArrowRightSLine />
       </Button>
     </Container>
   );
