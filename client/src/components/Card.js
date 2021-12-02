@@ -6,7 +6,7 @@ const MovieCard = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 0.5em;
+  margin: 0.8em 0.5em;
   padding: 0 0.6em;
   cursor: pointer;
   transition: 0.3s;

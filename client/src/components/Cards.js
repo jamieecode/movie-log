@@ -9,7 +9,7 @@ import SkeletonCard from "./skeletons/SkeletonCard";
 const Container = styled.section`
   width: 95%;
   overflow: hidden;
-  margin: 0 auto;
+  margin: 2em auto 0;
   position: relative;
   h1 {
     text-align: center;
@@ -46,7 +46,7 @@ const Button = styled.button`
 
 const Cards = ({ category }) => {
   const { data, error } = useFetch(
-    `${BASE_URL}/${category}/?api_key=${API_KEY}`
+    `${BASE_URL}/${category}?api_key=${API_KEY}`
   );
 
   const TOTAL_SLIDES = 4;
