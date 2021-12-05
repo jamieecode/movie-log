@@ -6,6 +6,8 @@ import Create from "../pages/Create";
 import Read from "../pages/Read";
 import MovieInfo from "../pages/MovieInfo";
 import Navbar from "../components/Navbar";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const Routes = () => {
   return (
@@ -17,6 +19,8 @@ const Routes = () => {
         <Route path="/create" component={Create} />
         <Route path="/read" component={Read} />
         <Route path="/movie/:id" component={MovieInfo} />
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
         <Route
           render={({ location }) => (
             <div>

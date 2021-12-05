@@ -6,7 +6,6 @@ import useFetch from "../hooks/useFetch";
 
 const StyledMovieInfoSection = styled.section`
   width: 80%;
-  // background-color: coral;
   padding: 1em;
   display: flex;
   flex-direction: column;

@@ -51,8 +51,8 @@ const Navbar = () => {
       <StyledLink to="/create">Create</StyledLink>
       <StyledLink to="/read">Read</StyledLink>
       <ul>
-        <li>Register</li>
-        <li>Login</li>
+        <StyledLink to="/register">Register</StyledLink>
+        <StyledLink to="/login">Login</StyledLink>
       </ul>
     </Nav>
   );
