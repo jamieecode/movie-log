@@ -21,7 +21,11 @@ const FormContainer = styled.section`
   form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
+  }
+  p {
+    margin: 1em;
+    font-weight: 500;
   }
   label {
     margin: 1em;
@@ -48,7 +52,6 @@ const StyledButton = styled.button`
   color: white;
   width: 20rem;
   padding: 1em;
-  margin-top: 2em;
   font-size: 0.8rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -59,10 +62,10 @@ const StyledButton = styled.button`
   }
 `;
 
-const Account = () => {
+const Login = () => {
   return (
     <Container>
-      <h2>Sign In</h2>
+      <h2>Log In</h2>
       <FormContainer>
         <form>
           <label>ID</label>
@@ -70,7 +73,8 @@ const Account = () => {
           <label>Password</label>
           <input type="text" />
         </form>
-        <StyledButton>sign in</StyledButton>
+        <StyledButton>login</StyledButton>
+        <p>New to Our Website?</p>
         <Link to="/register">
           <StyledButton>create account</StyledButton>
         </Link>
@@ -79,4 +83,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Login;
