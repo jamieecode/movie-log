@@ -28,7 +28,7 @@ const FormContainer = styled.section`
     font-weight: 500;
   }
   label {
-    margin: 1em;
+    margin: 0.5em 1em;
     font-weight: 500;
   }
   input {
@@ -67,10 +67,14 @@ const Register = () => {
       <h2>Register</h2>
       <FormContainer>
         <form>
-          <label>ID</label>
-          <input type="text" autoFocus />
-          <label>Password</label>
+        <label>Name</label>
           <input type="text" />
+          <label>ID</label>
+          <input type="text" />
+          <label>Password</label>
+          <input type="password" />
+          <label>Confirm Password</label>
+          <input type="password" />
         </form>
         <StyledButton>Register</StyledButton>
         <p>Already a member?</p>
