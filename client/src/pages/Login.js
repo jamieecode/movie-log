@@ -38,7 +38,7 @@ const FormContainer = styled.section`
     background-color: #f4f4f4;
     border-radius: 2em;
     border: 1px solid #f4f4f4;
-    width: 20rem;
+    width: 100%;
     outline: none;
   }
   input:hover {
@@ -52,7 +52,7 @@ const FormContainer = styled.section`
 const StyledButton = styled.button`
   background-color: #032541;
   color: white;
-  width: 20rem;
+  width: 100%;
   padding: 1em;
   font-size: 0.8rem;
   font-weight: 500;
@@ -76,7 +76,7 @@ const Login = () => {
       <h2>Log In</h2>
       <FormContainer>
         <form>
-          <label>ID</label>
+          <label>Username</label>
           <input type="text" autoFocus />
           <label>Password</label>
           <input type="text" />

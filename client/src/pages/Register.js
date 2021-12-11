@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import FormInput from "../components/FormInput";
 
 const Container = styled.section`
   display: flex;
@@ -17,42 +18,18 @@ const Container = styled.section`
   }
 `;
 
-const FormContainer = styled.section`
+const FormContainer = styled.form`
   margin: 0 auto;
   width: 30%;
-  form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2em;
-  }
-  p {
-    margin: 1em;
-    font-weight: 500;
-  }
-  label {
-    margin: 0.5em 1em;
-    font-weight: 500;
-  }
-  input {
-    padding: 1em;
-    background-color: #f4f4f4;
-    border-radius: 2em;
-    border: 1px solid #f4f4f4;
-    width: 20rem;
-    outline: none;
-  }
-  input:hover {
-    background-color: #eeeeee;
-  }
-  input:focus {
-    border: 1px solid #ccc;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
 `;
 
 const StyledButton = styled.button`
   background-color: #032541;
   color: white;
-  width: 20rem;
+  width: 100%;
   padding: 1em;
   font-size: 0.8rem;
   font-weight: 500;
@@ -64,81 +41,85 @@ const StyledButton = styled.button`
   }
 `;
 const Register = () => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [invalidUsername, setInvalidUsername] = useState(false);
-  const [invalidPassword, setInvalidPassword] = useState(false);
-  const [invalidPassword2, setInvalidPassword2] = useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const createUser = () => {
-    if (
-      password === password2 &&
-      !invalidUsername &&
-      !invalidPassword &&
-      !invalidPassword2
-    ) {
-      axios
-        .post("http://localhost:3001/register", {
-          name,
-          username,
-          password,
-        })
-        .then((response) => {
-          alert("USER CREATED");
-        });
-    }
+  const inputs = [
+    {
+      id: 1,
+      name: "name",
+      type: "text",
+      errorMessage: "write your name",
+      label: "name",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "username",
+      type: "text",
+      errorMessage: "Username should be 6-12 characters",
+      label: "username",
+      pattern: "^[A-Za-z0-9]{6,12}$",
+      required: true,
+    },
+    {
+      id: 4,
+      name: "password",
+      type: "password",
+      errorMessage: "Password should be 8-18 characters.",
+      label: "Password",
+      pattern: "^[A-Za-z0-9]{8,18}$",
+      required: true,
+    },
+    {
+      id: 5,
+      name: "confirmPassword",
+      type: "password",
+      errorMessage: "Passwords don't match!",
+      label: "Confirm Password",
+      pattern: user.password,
+      required: true,
+    },
+  ];
+
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   return (
     <Container>
       <h2>Register</h2>
-      <FormContainer>
-        <form>
-          <label>Name</label>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
-          <label>Username</label>
-          <input
-            type="text"
-            onChange={(e) => {
-              if (e.target.value.length < 6 || e.target.value.length > 12)
-                setInvalidUsername(true);
-              else {
-                setInvalidUsername(false);
-                setUsername(e.target.value);
-              }
-            }}
+      <FormContainer onSubmit={(e) => e.preventDefault()}>
+        {inputs.map((input) => (
+          <FormInput
+            key={input.id}
+            {...input}
+            value={user[input.name]}
+            onChange={onChange}
           />
-          {invalidUsername ? <p>Username should be 6-12 characters.</p> : ""}
-          <label>Password</label>
-          <input
-            type="password"
-            onChange={(e) => {
-              if (e.target.value.length < 6 || e.target.value.length > 12)
-                setInvalidPassword(true);
-              else {
-                setInvalidPassword(false);
-                setPassword(e.target.value);
-              }
-            }}
-          />
-          {invalidPassword ? <p>Password should be 6-12 characters.</p> : ""}
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            onChange={(e) => {
-              if (e.target.value !== password) {
-                setInvalidPassword2(true);
-              } else {
-                setInvalidPassword2(false);
-                setPassword2(e.target.value);
-              }
-            }}
-          />
-          {invalidPassword2 ? <p>Check your password again.</p> : ""}
-        </form>
-        <StyledButton onClick={createUser}>Register</StyledButton>
+        ))}
+        <StyledButton
+          onClick={() => {
+            if (
+              !user.name.errorMessage &&
+              !user.username.errorMessage &&
+              !user.password.errorMessage &&
+              user.password === user.confirmPassword
+            ) {
+              axios
+                .post("http://localhost:3001/register", user)
+                .then((response) => {
+                  alert("USER CREATED");
+                });
+            }
+          }}
+        >
+          Register
+        </StyledButton>
         <p>Already a member?</p>
         <Link to="/login">
           <StyledButton>Login</StyledButton>
