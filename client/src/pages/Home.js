@@ -11,7 +11,7 @@ const StyledHome = styled.section`
 
 const StyledMainSection = styled.section`
   width: 100%;
-  height: 30rem;
+  height: 25rem;
   display: flex;
   flex-direction: column;
 

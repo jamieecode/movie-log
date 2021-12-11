@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const Container = styled.section`
   display: flex;
@@ -62,21 +64,81 @@ const StyledButton = styled.button`
   }
 `;
 const Register = () => {
-   return (
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [invalidUsername, setInvalidUsername] = useState(false);
+  const [invalidPassword, setInvalidPassword] = useState(false);
+  const [invalidPassword2, setInvalidPassword2] = useState(false);
+
+  const createUser = () => {
+    if (
+      password === password2 &&
+      !invalidUsername &&
+      !invalidPassword &&
+      !invalidPassword2
+    ) {
+      axios
+        .post("http://localhost:3001/register", {
+          name,
+          username,
+          password,
+        })
+        .then((response) => {
+          alert("USER CREATED");
+        });
+    }
+  };
+
+  return (
     <Container>
       <h2>Register</h2>
       <FormContainer>
         <form>
-        <label>Name</label>
-          <input type="text" />
-          <label>ID</label>
-          <input type="text" />
+          <label>Name</label>
+          <input type="text" onChange={(e) => setName(e.target.value)} />
+          <label>Username</label>
+          <input
+            type="text"
+            onChange={(e) => {
+              if (e.target.value.length < 6 || e.target.value.length > 12)
+                setInvalidUsername(true);
+              else {
+                setInvalidUsername(false);
+                setUsername(e.target.value);
+              }
+            }}
+          />
+          {invalidUsername ? <p>Username should be 6-12 characters.</p> : ""}
           <label>Password</label>
-          <input type="password" />
+          <input
+            type="password"
+            onChange={(e) => {
+              if (e.target.value.length < 6 || e.target.value.length > 12)
+                setInvalidPassword(true);
+              else {
+                setInvalidPassword(false);
+                setPassword(e.target.value);
+              }
+            }}
+          />
+          {invalidPassword ? <p>Password should be 6-12 characters.</p> : ""}
           <label>Confirm Password</label>
-          <input type="password" />
+          <input
+            type="password"
+            onChange={(e) => {
+              if (e.target.value !== password) {
+                setInvalidPassword2(true);
+              } else {
+                setInvalidPassword2(false);
+                setPassword2(e.target.value);
+              }
+            }}
+          />
+          {invalidPassword2 ? <p>Check your password again.</p> : ""}
         </form>
-        <StyledButton>Register</StyledButton>
+        <StyledButton onClick={createUser}>Register</StyledButton>
         <p>Already a member?</p>
         <Link to="/login">
           <StyledButton>Login</StyledButton>

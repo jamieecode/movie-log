@@ -26,21 +26,20 @@ const Button = styled.button`
   padding: 0.5em;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.2rem;
-  color: navy;
+  font-size: 1.5rem;
+  color: #032541;
   &:hover {
     transition: all 0.4s ease-in-out;
-    color: #fff;
+    color: #01b4e4;
   }
   position: absolute;
-  top: 50%;
-  translate(-50%, -50%)
-  background-color: transparent;
+  top: 40%;
+
   &: first-of-type {
-    left:0;
+    left: 0;
   }
   &: last-of-type {
-    right:0;
+    right: 0;
   }
 `;
 

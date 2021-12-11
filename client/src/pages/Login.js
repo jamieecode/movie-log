@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Container = styled.section`
   display: flex;
@@ -63,6 +65,12 @@ const StyledButton = styled.button`
 `;
 
 const Login = () => {
+  const [listOfUsers, setListOfUsers] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:3001/login").then((response) => {
+      setListOfUsers(response.data);
+    });
+  }, []);
   return (
     <Container>
       <h2>Log In</h2>
@@ -79,6 +87,15 @@ const Login = () => {
           <StyledButton>create account</StyledButton>
         </Link>
       </FormContainer>
+      {listOfUsers.map((user) => {
+        return (
+          <div>
+            <h1>name:{user.name}</h1>
+            <h1>username:{user.username}</h1>
+            <h1>password:{user.password}</h1>
+          </div>
+        );
+      })}
     </Container>
   );
 };
