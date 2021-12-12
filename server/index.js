@@ -5,7 +5,9 @@ const express = require("express");
 const app = express();
 const port = PORT || 4000;
 const mongoose = require("mongoose");
-const UserModel = require("./models/Users");
+
+const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
 const cors = require("cors");
 
@@ -20,23 +22,8 @@ mongoose
   .then(() => console.log("MONGODB CONNECTED"))
   .catch((error) => console.error(error));
 
-app.get("/login", (req, res) => {
-  UserModel.find({}, (err, result) => {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(result);
-    }
-  });
-});
-
-app.post("/register", async (req, res) => {
-  const user = req.body;
-  const newUser = new UserModel(user);
-  await newUser.save();
-
-  res.json(user);
-});
+app.use("/server/auth", authRoute);
+app.use("/server/post", postRoute);
 
 app.listen(port, () => {
   console.log("SERVER RUNNING");

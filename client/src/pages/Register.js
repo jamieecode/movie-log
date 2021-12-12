@@ -111,7 +111,7 @@ const Register = () => {
               user.password === user.confirmPassword
             ) {
               axios
-                .post("http://localhost:3001/register", user)
+                .post("http://localhost:3001/server/auth/register", user)
                 .then((response) => {
                   alert("USER CREATED");
                 });

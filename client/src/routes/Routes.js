@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
-const Routes = () => {
+const Routes = ({ setLoginUser }) => {
   return (
     <BrowserRouter>
       <Navbar />

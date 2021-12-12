@@ -1,7 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { RiMovie2Line } from "react-icons/ri";
+import { useContext } from "react";
+import { LoginContext } from "../context/loginContext";
 
 const Nav = styled.nav`
   display: flex;
@@ -40,6 +41,8 @@ const StyledLink = styled(Link)`
 `;
 
 const Navbar = () => {
+  const { loginUser, setLoginUser } = useContext(LoginContext);
+
   return (
     <Nav>
       <h1>
@@ -48,12 +51,17 @@ const Navbar = () => {
       </h1>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/about">About</StyledLink>
+
       <StyledLink to="/create">Create</StyledLink>
       <StyledLink to="/read">Read</StyledLink>
-      <ul>
-        <StyledLink to="/register">Register</StyledLink>
-        <StyledLink to="/login">Login</StyledLink>
-      </ul>
+      {loginUser ? (
+        <button onClick={() => setLoginUser(null)}>Logout</button>
+      ) : (
+        <ul>
+          <StyledLink to="/register">Register</StyledLink>
+          <StyledLink to="/login">Login</StyledLink>
+        </ul>
+      )}
     </Nav>
   );
 };
