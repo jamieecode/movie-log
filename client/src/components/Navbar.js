@@ -41,7 +41,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Navbar = () => {
-  const { loginUser, setLoginUser } = useContext(LoginContext);
+  // const { loginUser, setLoginUser } = useContext(LoginContext);
 
   return (
     <Nav>
@@ -53,15 +53,12 @@ const Navbar = () => {
       <StyledLink to="/about">About</StyledLink>
 
       <StyledLink to="/create">Create</StyledLink>
-      <StyledLink to="/read">Read</StyledLink>
-      {loginUser ? (
-        <button onClick={() => setLoginUser(null)}>Logout</button>
-      ) : (
-        <ul>
-          <StyledLink to="/register">Register</StyledLink>
-          <StyledLink to="/login">Login</StyledLink>
-        </ul>
-      )}
+      <StyledLink to="/post">Read</StyledLink>
+
+      <ul>
+        <StyledLink to="/register">Register</StyledLink>
+        <StyledLink to="/login">Login</StyledLink>
+      </ul>
     </Nav>
   );
 };

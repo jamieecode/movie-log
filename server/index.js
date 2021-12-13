@@ -23,7 +23,7 @@ mongoose
   .catch((error) => console.error(error));
 
 app.use("/server/auth", authRoute);
-app.use("/server/post", postRoute);
+app.use("/server", postRoute);
 
 app.listen(port, () => {
   console.log("SERVER RUNNING");

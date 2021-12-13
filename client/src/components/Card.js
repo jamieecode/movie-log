@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import Rating from "./Rating";
 import styled from "styled-components";
 

@@ -1,7 +1,11 @@
-import React from "react";
+import Posts from "../components/Posts";
 
 const Read = () => {
-  return <div>read</div>;
+  return (
+    <>
+      <Posts />
+    </>
+  );
 };
 
 export default Read;
