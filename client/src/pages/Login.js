@@ -1,8 +1,8 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext, useRef } from "react";
 import axios from "axios";
-import { LoginContext } from "../context/loginContext";
+import { LoginContext } from "../context/LoginContext";
 
 const Container = styled.section`
   display: flex;
@@ -66,73 +66,44 @@ const StyledButton = styled.button`
 `;
 
 const Login = () => {
-  // const [listOfUsers, setListOfUsers] = useState([]);
-  // useEffect(() => {
-  //   axios.get("http://localhost:3001/login").then((response) => {
-  //     setListOfUsers(response.data);
-  //   });
-  // }, []);
+  const usernameRef = useRef();
+  const passwordRef = useRef();
+  const { dispatch, isFetching } = useContext(LoginContext);
 
-  const { setLoginUser } = useContext(LoginContext);
-
-  const history = useHistory();
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
-
-  const login = () => {
-    axios.post("http://localhost:3001/server/auth/login", user).then((res) => {
-      alert(res.data.message);
-      console.log(res.data.user);
-      setLoginUser(res.data.user);
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const res = await axios.post("/auth/login", {
+        username: usernameRef.current.value,
+        password: passwordRef.current.value,
+      });
+      console.log(res.data);
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE" });
+    }
   };
 
   return (
     <Container>
       <h2>Log In</h2>
       <FormContainer>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>Username</label>
-          <input
-            type="text"
-            autoFocus
-            name="username"
-            value={user.username}
-            onChange={handleChange}
-          />
+          <input type="text" ref={usernameRef} />
           <label>Password</label>
-          <input
-            type="text"
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-          />
+          <input type="password" ref={passwordRef} />
+          <StyledButton type="submit" disabled={isFetching}>
+            login
+          </StyledButton>
         </form>
-        <StyledButton onClick={login}>login</StyledButton>
+
         <p>New to Our Website?</p>
         <Link to="/register">
           <StyledButton>create account</StyledButton>
         </Link>
       </FormContainer>
-      {/* {listOfUsers.map((user) => {
-        return (
-          <div>
-            <h1>name:{user.name}</h1>
-            <h1>username:{user.username}</h1>
-            <h1>password:{user.password}</h1>
-          </div>
-        );
-      })} */}
     </Container>
   );
 };

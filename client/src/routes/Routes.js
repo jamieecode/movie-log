@@ -9,20 +9,23 @@ import Navbar from "../components/Navbar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Single from "../pages/Single";
+import { useContext } from "react";
+import { LoginContext } from "../context/LoginContext";
 
-const Routes = ({ setLoginUser }) => {
+const Routes = () => {
+  const user = useContext(LoginContext);
   return (
     <BrowserRouter>
       <Navbar />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/create" component={Create} />
+        <Route path="/create">{user ? <Create /> : <Login />}</Route>
         <Route path="/post" exact component={Read} />
         <Route path="/post/:postId" component={Single} />
-
         <Route path="/movie/:id" component={MovieInfo} />
         <Route path="/register" component={Register} />
+
         <Route path="/login" component={Login} />
         <Route
           render={({ location }) => (

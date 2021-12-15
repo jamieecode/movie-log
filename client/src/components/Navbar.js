@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { RiMovie2Line } from "react-icons/ri";
 import { useContext } from "react";
-import { LoginContext } from "../context/loginContext";
+import { LoginContext } from "../context/LoginContext";
 
 const Nav = styled.nav`
   display: flex;
@@ -28,10 +28,21 @@ const Nav = styled.nav`
   }
   ul {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
     list-style: none;
     text-underline: none;
     width: 15%;
+  }
+
+  li {
+    color: #01b4e4;
+  }
+
+  img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
   }
 `;
 
@@ -41,8 +52,11 @@ const StyledLink = styled(Link)`
 `;
 
 const Navbar = () => {
-  // const { loginUser, setLoginUser } = useContext(LoginContext);
+  const { user, dispatch } = useContext(LoginContext);
 
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
   return (
     <Nav>
       <h1>
@@ -56,8 +70,20 @@ const Navbar = () => {
       <StyledLink to="/post">Read</StyledLink>
 
       <ul>
-        <StyledLink to="/register">Register</StyledLink>
-        <StyledLink to="/login">Login</StyledLink>
+        {user ? (
+          <>
+            <li onClick={handleLogout}>Logout</li>
+            <img
+              src="https://images.unsplash.com/photo-1575488405241-def30132aab6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+              alt="user"
+            />
+          </>
+        ) : (
+          <>
+            <StyledLink to="/register">Register</StyledLink>
+            <StyledLink to="/login">Login</StyledLink>
+          </>
+        )}
       </ul>
     </Nav>
   );

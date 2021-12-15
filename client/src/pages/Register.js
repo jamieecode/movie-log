@@ -90,10 +90,25 @@ const Register = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !user.name.errorMessage &&
+      !user.username.errorMessage &&
+      !user.password.errorMessage &&
+      user.password === user.confirmPassword
+    ) {
+      axios.post("/auth/register", user).then((response) => {
+        alert("USER CREATED");
+        response.data && window.location.replace("/login");
+      });
+    }
+  };
+
   return (
     <Container>
       <h2>Register</h2>
-      <FormContainer onSubmit={(e) => e.preventDefault()}>
+      <FormContainer onSubmit={onSubmit}>
         {inputs.map((input) => (
           <FormInput
             key={input.id}
@@ -102,24 +117,7 @@ const Register = () => {
             onChange={onChange}
           />
         ))}
-        <StyledButton
-          onClick={() => {
-            if (
-              !user.name.errorMessage &&
-              !user.username.errorMessage &&
-              !user.password.errorMessage &&
-              user.password === user.confirmPassword
-            ) {
-              axios
-                .post("http://localhost:3001/server/auth/register", user)
-                .then((response) => {
-                  alert("USER CREATED");
-                });
-            }
-          }}
-        >
-          Register
-        </StyledButton>
+        <StyledButton>Register</StyledButton>
         <p>Already a member?</p>
         <Link to="/login">
           <StyledButton>Login</StyledButton>

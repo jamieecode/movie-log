@@ -1,5 +1,7 @@
-import React from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { LoginContext } from "../context/LoginContext";
+import axios from "axios";
 
 const StyledCreateSection = styled.section`
   display: flex;
@@ -53,16 +55,38 @@ const StyledButton = styled.button`
 `;
 
 const Create = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const { user } = useContext(LoginContext);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPost = {
+      username: user.username,
+      title,
+      content,
+    };
+    const res = await axios.post("/create", newPost);
+    console.log(res.data);
+  };
+
   return (
     <StyledCreateSection>
       <h2>Create</h2>
-      <article>
+      <form onSubmit={handleSubmit}>
         <label>title</label>
-        <input type="text" />
+        <input
+          type="text"
+          autoFocus
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <label>content</label>
-        <textarea></textarea>
-        <StyledButton>submit</StyledButton>
-      </article>
+        <textarea
+          type="text"
+          onChange={(e) => setContent(e.target.value)}
+        ></textarea>
+        <StyledButton type="submit">submit</StyledButton>
+      </form>
     </StyledCreateSection>
   );
 };

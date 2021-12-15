@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// ALL POSTS
+// GET ALL POSTS
 router.get("/post", async (req, res) => {
   try {
     let posts;
