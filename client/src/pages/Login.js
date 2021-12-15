@@ -13,18 +13,18 @@ const Container = styled.section`
     font-size: 2.3rem;
     font-weight: 600;
     width: 100%;
-    margin: 1.5em 0 0.5em;
+    margin: 1.3em 0 0.5em;
     text-align: center;
   }
 `;
 
 const FormContainer = styled.section`
   margin: 0 auto;
-  width: 30%;
+  width: 20rem;
   form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
   }
   p {
     margin: 1em;
@@ -41,6 +41,9 @@ const FormContainer = styled.section`
     border: 1px solid #f4f4f4;
     width: 100%;
     outline: none;
+  }
+  input:last-of-type {
+    margin-bottom: 2em;
   }
   input:hover {
     background-color: #eeeeee;
@@ -73,6 +76,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
+
     try {
       const res = await axios.post("/auth/login", {
         username: usernameRef.current.value,
@@ -98,7 +102,6 @@ const Login = () => {
             login
           </StyledButton>
         </form>
-
         <p>New to Our Website?</p>
         <Link to="/register">
           <StyledButton>create account</StyledButton>

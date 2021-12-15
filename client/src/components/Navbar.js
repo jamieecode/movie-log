@@ -57,6 +57,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
+
   return (
     <Nav>
       <h1>
@@ -70,14 +71,12 @@ const Navbar = () => {
       <StyledLink to="/post">Read</StyledLink>
 
       <ul>
+        <li onClick={handleLogout}>{user && "Logout"}</li>
         {user ? (
-          <>
-            <li onClick={handleLogout}>Logout</li>
-            <img
-              src="https://images.unsplash.com/photo-1575488405241-def30132aab6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-              alt="user"
-            />
-          </>
+          <img
+            src="https://images.unsplash.com/photo-1575488405241-def30132aab6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+            alt="user"
+          />
         ) : (
           <>
             <StyledLink to="/register">Register</StyledLink>

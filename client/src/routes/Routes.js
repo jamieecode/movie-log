@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "../pages/Home";
 import About from "../pages/About";
@@ -9,11 +9,11 @@ import Navbar from "../components/Navbar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Single from "../pages/Single";
-import { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
 
 const Routes = () => {
-  const user = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -25,7 +25,6 @@ const Routes = () => {
         <Route path="/post/:postId" component={Single} />
         <Route path="/movie/:id" component={MovieInfo} />
         <Route path="/register" component={Register} />
-
         <Route path="/login" component={Login} />
         <Route
           render={({ location }) => (

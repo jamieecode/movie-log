@@ -13,17 +13,21 @@ const Container = styled.section`
     font-size: 2.3rem;
     font-weight: 600;
     width: 100%;
-    margin: 1.5em 0 0.5em;
+    margin: 1.3em 0 0.5em;
     text-align: center;
   }
 `;
 
 const FormContainer = styled.form`
   margin: 0 auto;
-  width: 30%;
+  width: 20rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+  p {
+    margin: 1em;
+    font-weight: 500;
+  }
 `;
 
 const StyledButton = styled.button`

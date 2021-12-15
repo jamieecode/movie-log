@@ -68,6 +68,7 @@ const Create = () => {
     };
     const res = await axios.post("/create", newPost);
     console.log(res.data);
+    window.location.replace("/post");
   };
 
   return (
