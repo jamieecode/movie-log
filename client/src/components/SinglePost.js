@@ -9,15 +9,32 @@ const SinglePost = () => {
   const path = location.pathname.split("/")[2];
   const { user } = useContext(LoginContext);
   const [post, setPost] = useState({});
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get("/post/" + path);
       console.log(res);
       setPost(res.data);
+      setTitle(res.data.title);
+      setContent(res.data.content);
     };
     getPost();
   }, [path]);
+
+  const handleEdit = async () => {
+    try {
+      await axios.put(`/post/${post._id}`, {
+        username: user.username,
+        title,
+        content,
+      });
+      setEdit(false);
+      console.log(post);
+    } catch (err) {}
+  };
 
   const handleDelete = async () => {
     try {
@@ -31,16 +48,40 @@ const SinglePost = () => {
 
   return (
     <div>
-      <h2>{post.title}</h2>
-      <h5>{post.username}</h5>
-      <p>{post.content}</p>
-      <small>{post.createdAt}</small>
-      {post.username === user.username && (
+      {edit ? (
         <>
-          <button>
-            edit
-            <AiOutlineEdit />
-          </button>
+          <input
+            type="text"
+            value={title}
+            autoFocus
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <textarea
+            type="text"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </>
+      ) : (
+        <>
+          <h2>{title}</h2>
+          <h5>{post.username}</h5>
+          <p>{content}</p>
+          <small>{post.updatedAt || post.createdAt}</small>
+        </>
+      )}
+
+      {post.username === user?.username && (
+        <>
+          {!edit ? (
+            <button onClick={() => setEdit(true)}>
+              edit
+              <AiOutlineEdit />
+            </button>
+          ) : (
+            <button onClick={handleEdit}>Finish</button>
+          )}
+
           <button onClick={handleDelete}>
             delete
             <AiOutlineDelete />

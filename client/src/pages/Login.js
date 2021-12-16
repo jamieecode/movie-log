@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useContext, useRef } from "react";
 import axios from "axios";
 import { LoginContext } from "../context/LoginContext";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.section`
   display: flex;
@@ -72,6 +73,7 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(LoginContext);
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,6 +86,7 @@ const Login = () => {
       });
       console.log(res.data);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      history.push("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
     }

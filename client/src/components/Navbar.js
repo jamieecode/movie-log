@@ -37,6 +37,7 @@ const Nav = styled.nav`
 
   li {
     color: #01b4e4;
+    cursor: pointer;
   }
 
   img {
