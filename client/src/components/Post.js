@@ -8,6 +8,10 @@ const StyledPost = styled.article`
   padding: 1em;
   -webkit-box-shadow: 3px 3px 13px 1px #e5e5e5;
   box-shadow: 3px 3px 13px 1px #e5e5e5;
+  transition: 0.3s;
+  &:hover {
+    transform: translate(0, -0.6rem);
+  }
   p {
     overflow: hidden;
     text-overflow: ellipsis;

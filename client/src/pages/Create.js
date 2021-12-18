@@ -6,7 +6,6 @@ import axios from "axios";
 const StyledCreateSection = styled.section`
   display: flex;
   flex-direction: column;
-
   h2 {
     text-align: center;
     margin: 1.5em 0 1em;
@@ -29,6 +28,7 @@ const StyledCreateSection = styled.section`
     border: 2px solid #032541;
     width: 30rem;
     height: 2.5rem;
+    padding-left: 1em;
   }
 
   textarea {

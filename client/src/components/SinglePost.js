@@ -2,7 +2,63 @@ import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { LoginContext } from "../context/LoginContext";
-import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import {
+  AiOutlineEdit,
+  AiOutlineDelete,
+  AiOutlineClose,
+  AiOutlineCheck,
+} from "react-icons/ai";
+import styled from "styled-components";
+
+const StyledArticle = styled.article`
+  width: 50%;
+  margin: 4em auto;
+  p {
+    margin: 1em 0;
+    font-size: 1.1rem;
+    &:first-of-type {
+      font-weight: 500;
+      font-size: 1rem;
+      text-align: right;
+    }
+  }
+`;
+
+const StyledEdit = styled.div`
+  display: flex;
+  flex-direction: column;
+  input {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  textarea {
+    font-size: 1rem;
+    height: 10rem;
+    padding: 1.5em;
+    margin: 2em 0;
+  }
+`;
+
+const StyledButtons = styled.div`
+  display: flex;
+  justify-content: end;
+  button {
+    font-size: 1.1rem;
+    width: 5.5rem;
+    padding: 0.2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 0.5em;
+    &:first-of-type {
+      background-color: #2b6a4d;
+    }
+    &:last-of-type {
+      background-color: #bf2c22;
+      margin-left: 1em;
+    }
+  }
+`;
 
 const SinglePost = () => {
   const location = useLocation();
@@ -32,7 +88,6 @@ const SinglePost = () => {
         content,
       });
       setEdit(false);
-      console.log(post);
     } catch (err) {}
   };
 
@@ -47,9 +102,9 @@ const SinglePost = () => {
   };
 
   return (
-    <div>
+    <>
       {edit ? (
-        <>
+        <StyledEdit>
           <input
             type="text"
             value={title}
@@ -61,34 +116,37 @@ const SinglePost = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-        </>
-      ) : (
-        <>
-          <h2>{title}</h2>
-          <h5>{post.username}</h5>
-          <p>{content}</p>
-          <small>{post.updatedAt}</small>
-        </>
-      )}
-
-      {post.username === user?.username && (
-        <>
-          {!edit ? (
-            <button onClick={() => setEdit(true)}>
-              edit
-              <AiOutlineEdit />
+          <StyledButtons>
+            <button onClick={handleEdit}>
+              Finish
+              <AiOutlineCheck />
             </button>
-          ) : (
-            <button onClick={handleEdit}>Finish</button>
+            <button onClick={() => setEdit(false)}>
+              cancel
+              <AiOutlineClose />
+            </button>
+          </StyledButtons>
+        </StyledEdit>
+      ) : (
+        <StyledArticle>
+          <h2>{title}</h2>
+          <p>written by {post.username}</p>
+          <p>{content}</p>
+          {post.username === user?.username && (
+            <StyledButtons>
+              <button onClick={() => setEdit(true)}>
+                edit
+                <AiOutlineEdit />
+              </button>
+              <button onClick={handleDelete}>
+                delete
+                <AiOutlineDelete />
+              </button>
+            </StyledButtons>
           )}
-
-          <button onClick={handleDelete}>
-            delete
-            <AiOutlineDelete />
-          </button>
-        </>
+        </StyledArticle>
       )}
-    </div>
+    </>
   );
 };
 

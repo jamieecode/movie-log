@@ -1,4 +1,3 @@
-import React from "react";
 import SkeletonElement from "./SkeletonElement";
 
 const SkeletonCard = () => {
