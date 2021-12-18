@@ -12,7 +12,7 @@ const StyledCreateSection = styled.section`
     margin: 1.5em 0 1em;
   }
 
-  article {
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;

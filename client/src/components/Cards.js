@@ -11,8 +11,8 @@ const Container = styled.section`
   overflow: hidden;
   margin: 2em auto 0;
   position: relative;
-  h1 {
-    text-align: center;
+  h2 {
+    margin-left: 1em;
   }
 `;
 

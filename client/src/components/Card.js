@@ -15,7 +15,7 @@ const MovieCard = styled.article`
     border-radius: 0.5em;
   }
   &: hover {
-    transform: translate(0, -0.7rem);
+    transform: translate(0, -0.6rem);
   }
 `;
 

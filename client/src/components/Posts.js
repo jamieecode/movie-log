@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "./Post";
+import styled from "styled-components";
+
+const StyledPostSection = styled.section`
+  margin: 4em auto 0;
+  width: 90%;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+`;
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -14,11 +23,11 @@ const Posts = () => {
   }, []);
 
   return (
-    <section>
+    <StyledPostSection>
       {posts.map((post, index) => (
         <Post key={index} post={post} />
       ))}
-    </section>
+    </StyledPostSection>
   );
 };
 

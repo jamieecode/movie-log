@@ -67,7 +67,7 @@ const SinglePost = () => {
           <h2>{title}</h2>
           <h5>{post.username}</h5>
           <p>{content}</p>
-          <small>{post.updatedAt || post.createdAt}</small>
+          <small>{post.updatedAt}</small>
         </>
       )}
 
