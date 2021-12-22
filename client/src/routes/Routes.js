@@ -8,6 +8,7 @@ import MovieInfo from "../pages/MovieInfo";
 import Navbar from "../components/Navbar";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Settings from "../pages/Settings";
 import Single from "../pages/Single";
 import { LoginContext } from "../context/LoginContext";
 
@@ -26,6 +27,7 @@ const Routes = () => {
         <Route path="/movie/:id" component={MovieInfo} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
+        <Route path="/settings" component={Settings} />
         <Route
           render={({ location }) => (
             <div>

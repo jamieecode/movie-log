@@ -9,7 +9,6 @@ import {
   AiOutlineCheck,
 } from "react-icons/ai";
 import styled from "styled-components";
-import useFetch from "../hooks/useFetch";
 
 const StyledArticle = styled.article`
   width: 50%;

@@ -84,11 +84,13 @@ const Login = () => {
         username: usernameRef.current.value,
         password: passwordRef.current.value,
       });
-      console.log(res.data);
+
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      alert(`Welcome, ${res.data.username}`);
       history.push("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });
+      alert("please try again");
     }
   };
 

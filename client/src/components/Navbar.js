@@ -40,10 +40,21 @@ const Nav = styled.nav`
     cursor: pointer;
   }
 
-  img {
-    width: 2.3rem;
-    height: 2.3rem;
+  div {
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
+    background-color: #8fcea1;
+    color: #032541;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 `;
 
@@ -74,10 +85,9 @@ const Navbar = () => {
       <ul>
         <li onClick={handleLogout}>{user && "Logout"}</li>
         {user ? (
-          <img
-            src="https://images.unsplash.com/photo-1575488405241-def30132aab6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-            alt="user"
-          />
+          <StyledLink to="/settings">
+            <div>{user.username[0]}</div>
+          </StyledLink>
         ) : (
           <>
             <StyledLink to="/register">Register</StyledLink>
