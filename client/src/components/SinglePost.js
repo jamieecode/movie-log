@@ -9,6 +9,7 @@ import {
   AiOutlineCheck,
 } from "react-icons/ai";
 import styled from "styled-components";
+import useFetch from "../hooks/useFetch";
 
 const StyledArticle = styled.article`
   width: 50%;
@@ -22,11 +23,18 @@ const StyledArticle = styled.article`
       text-align: right;
     }
   }
+  img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+  }
 `;
 
 const StyledEdit = styled.div`
   display: flex;
   flex-direction: column;
+  width: 30rem;
+  margin: 3em auto;
   input {
     font-size: 1.5rem;
     font-weight: 600;
@@ -64,6 +72,7 @@ const SinglePost = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const { user } = useContext(LoginContext);
+  const imageURL = "http://localhost:3001/images/";
   const [post, setPost] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -72,7 +81,6 @@ const SinglePost = () => {
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get("/post/" + path);
-      console.log(res);
       setPost(res.data);
       setTitle(res.data.title);
       setContent(res.data.content);
@@ -129,6 +137,7 @@ const SinglePost = () => {
         </StyledEdit>
       ) : (
         <StyledArticle>
+          {post.image && <img src={imageURL + post.image} />}
           <h2>{title}</h2>
           <p>written by {post.username}</p>
           <p>{content}</p>

@@ -6,6 +6,14 @@ import axios from "axios";
 const StyledCreateSection = styled.section`
   display: flex;
   flex-direction: column;
+
+  img {
+    width: 30rem;
+    height: 20rem;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+
   h2 {
     text-align: center;
     margin: 1.5em 0 1em;
@@ -29,12 +37,16 @@ const StyledCreateSection = styled.section`
     width: 30rem;
     height: 2.5rem;
     padding-left: 1em;
+    &: last-of-type {
+      border: none;
+    }
   }
 
   textarea {
     border: 2px solid #032541;
     width: 30rem;
     height: 20rem;
+    padding: 1em;
   }
 `;
 
@@ -57,6 +69,7 @@ const StyledButton = styled.button`
 const Create = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [file, setFile] = useState(null);
   const { user } = useContext(LoginContext);
 
   const handleSubmit = async (e) => {
@@ -66,6 +79,16 @@ const Create = () => {
       title,
       content,
     };
+    if (file) {
+      const data = new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
+      data.append("file", file);
+      newPost.image = filename;
+      try {
+        await axios.post("/upload", data);
+      } catch (err) {}
+    }
     const res = await axios.post("/create", newPost);
     console.log(res.data);
     window.location.replace("/post");
@@ -74,6 +97,7 @@ const Create = () => {
   return (
     <StyledCreateSection>
       <h2>Create</h2>
+      {file && <img src={URL.createObjectURL(file)} />}
       <form onSubmit={handleSubmit}>
         <label>title</label>
         <input
@@ -86,6 +110,8 @@ const Create = () => {
           type="text"
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
+        <label>Image</label>
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <StyledButton type="submit">submit</StyledButton>
       </form>
     </StyledCreateSection>

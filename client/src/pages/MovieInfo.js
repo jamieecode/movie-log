@@ -3,6 +3,7 @@ import { BASE_URL, API_KEY } from "../api/api";
 import styled from "styled-components";
 import Pagination from "../components/Pagination";
 import useFetch from "../hooks/useFetch";
+import Spinner from "../components/Spinner";
 
 const StyledMovieInfoSection = styled.section`
   width: 80%;
@@ -50,7 +51,7 @@ const MovieInfo = ({ location }) => {
     `${BASE_URL}/${id}?api_key=${API_KEY}&append_to_response=credits`
   );
 
-  if (loading) return <h1>LOADING</h1>;
+  if (loading) return <Spinner />;
   if (error) console.log(error);
 
   //pagination;

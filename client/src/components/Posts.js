@@ -8,7 +8,7 @@ const StyledPostSection = styled.section`
   width: 90%;
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 `;
 
 const Posts = () => {

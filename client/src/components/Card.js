@@ -29,7 +29,7 @@ const Card = ({ movie }) => {
     <MovieCard onClick={handleClick}>
       <div>
         <img
-          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.title}
         />
         <h3>{movie.title}</h3>
