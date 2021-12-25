@@ -25,6 +25,16 @@ const Settings = () => {
   const { user, dispatch } = useContext(LoginContext);
   const history = useHistory();
 
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/users/${user._id}`, {
+        data: { userId: user._id, username: user.username, user },
+      });
+      localStorage.removeItem("user");
+      window.location.replace("/");
+    } catch (err) {}
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: "UPDATE_START" });
@@ -36,7 +46,6 @@ const Settings = () => {
     if (password === password2) {
       try {
         const res = await axios.put("/users/" + user._id, updatedUser);
-        setEditUser(true);
         dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
         alert("Your account has been updated");
         history.push("/");
@@ -52,7 +61,7 @@ const Settings = () => {
       <div>
         <p>Do you want to delete your account?</p>
         <div>
-          <button>YES</button>
+          <button onClick={handleDelete}>YES</button>
           <button>NO</button>
         </div>
       </div>

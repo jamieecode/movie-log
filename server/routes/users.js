@@ -50,11 +50,7 @@ router.delete("/:id", async (req, res) => {
       } catch (err) {
         res.status(500).json(err);
       }
-    } catch (err) {
-      res.status(404).json("User not found!");
-    }
-  } else {
-    res.status(401).json("You can delete only your account!");
+    } catch {}
   }
 });
 
