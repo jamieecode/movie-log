@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import Post from "./Post";
 import styled from "styled-components";
+import useFetch from "../hooks/useFetch";
+import Spinner from "./Spinner";
 
 const StyledPostSection = styled.section`
   margin: 4em auto 0;
@@ -12,19 +12,13 @@ const StyledPostSection = styled.section`
 `;
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get("/post");
-      setPosts(res.data);
-    };
-    fetchPosts();
-  }, []);
+  const { data, error, loading } = useFetch("/post");
+  if (loading) return <Spinner />;
+  if (error) console.log(error);
 
   return (
     <StyledPostSection>
-      {posts.map((post, index) => (
+      {data?.map((post, index) => (
         <Post key={index} post={post} />
       ))}
     </StyledPostSection>

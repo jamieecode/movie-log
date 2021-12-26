@@ -10,12 +10,17 @@ const StyledMovieInfoSection = styled.section`
   padding: 1em;
   display: flex;
   flex-direction: column;
-  margin: 2em auto;
+  margin: 0 auto;
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1em;
+  }
   img {
     width: 15rem;
+    border-radius: 0.5em;
   }
   h2 {
-    margin-top: 1em;
+    margin: 1em 0;
   }
 `;
 
@@ -25,8 +30,11 @@ const StyledMovieInfoCard = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 0 2em;
+    padding: 0 0 0 2em;
+  }
+
+  p {
+    margin: 0.5em 0;
   }
 `;
 
@@ -67,6 +75,7 @@ const MovieInfo = ({ location }) => {
     <StyledMovieInfoSection>
       {data && (
         <>
+          <h2>Overview</h2>
           <StyledMovieInfoCard>
             <img
               src={
@@ -78,16 +87,23 @@ const MovieInfo = ({ location }) => {
             />
             <div>
               <h1>
-                {data.title}(
+                {data.title} (
                 {data.release_date && data.release_date.split("-")[0]})
               </h1>
               <h4>
+                Genre :{" "}
                 {data.genres &&
                   data.genres.map((genre) => (
                     <span key={genre.name}>{genre.name} </span>
                   ))}
               </h4>
-              <h4>{data.runtime}m</h4>
+              <h4>
+                Time : {Math.floor(data.runtime / 60)} hr{" "}
+                {Math.floor(
+                  (data.runtime / 60 - Math.floor(data.runtime / 60)) * 60
+                )}
+                m
+              </h4>
               <p>{data.overview}</p>
               <a href={data.homepage}>{data.homepage}</a>
             </div>

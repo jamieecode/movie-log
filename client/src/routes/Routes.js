@@ -27,7 +27,7 @@ const Routes = () => {
         <Route path="/movie/:id" component={MovieInfo} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/settings" component={Settings} />
+        <Route path="/settings">{user ? <Settings /> : <Login />}</Route>
         <Route
           render={({ location }) => (
             <div>

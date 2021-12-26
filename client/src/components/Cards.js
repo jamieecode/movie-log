@@ -7,7 +7,7 @@ import useFetch from "../hooks/useFetch";
 import SkeletonCard from "./skeletons/SkeletonCard";
 
 const Container = styled.section`
-  width: 95%;
+  width: 88%;
   overflow: hidden;
   margin: 2em auto 0;
   position: relative;
@@ -17,13 +17,14 @@ const Container = styled.section`
 `;
 
 const CardSection = styled.section`
-  width: 95%;
+  width: 100%;
   display: flex;
 `;
 
 const Button = styled.button`
   all: unset;
-  padding: 0.5em;
+  width: 5rem;
+  height: 5rem;
   border-radius: 50%;
   cursor: pointer;
   font-size: 1.5rem;
@@ -36,10 +37,13 @@ const Button = styled.button`
   top: 40%;
 
   &: first-of-type {
-    left: 0;
+    left: -5px;
+
+    z-index: 6;
   }
   &: last-of-type {
-    right: 0;
+    right: -40px;
+    z-index: 6;
   }
 `;
 
@@ -87,8 +91,9 @@ const Cards = ({ category }) => {
     <Container>
       <h2>{categoryBar(category)}</h2>
       <CardSection ref={slideRef}>
-        {data &&
-          data.results.map((movie) => <Card key={movie.id} movie={movie} />)}
+        {data?.results.map((movie) => (
+          <Card key={movie.id} movie={movie} />
+        ))}
         {!data && [1, 2, 3, 4, 5].map((n) => <SkeletonCard key={n} />)}
       </CardSection>
       <Button onClick={prevSlide}>

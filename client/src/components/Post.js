@@ -58,7 +58,7 @@ const StyledImage = styled.img`
 
 const Post = ({ post }) => {
   const imageURL = "http://localhost:3001/images/";
-  console.log(post);
+
   return (
     <StyledPost>
       <StyledLink to={`/post/${post._id}`}>

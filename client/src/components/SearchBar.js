@@ -12,18 +12,19 @@ const StyledInputSection = styled.section`
 `;
 
 const StyledInputs = styled.div`
-  width: 85%;
+  width: 100%;
   display: flex;
   align-items: center;
 
   form {
+    width: 60%;
     display: flex;
     background-color: white;
     align-items: center;
   }
 
   input {
-    width: 30rem;
+    width: 100%;
     padding: 0.4em;
   }
 

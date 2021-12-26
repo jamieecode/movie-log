@@ -11,7 +11,7 @@ const MovieCard = styled.article`
   cursor: pointer;
   transition: 0.3s;
   img {
-    width: 15rem;
+    width: 13rem;
     border-radius: 0.5em;
   }
   &: hover {

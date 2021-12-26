@@ -90,14 +90,14 @@ const Create = () => {
       } catch (err) {}
     }
     const res = await axios.post("/create", newPost);
-    console.log(res.data);
+
     window.location.replace("/post");
   };
 
   return (
     <StyledCreateSection>
       <h2>Create</h2>
-      {file && <img src={URL.createObjectURL(file)} />}
+      {file && <img src={URL.createObjectURL(file)} alt="blogpost" />}
       <form onSubmit={handleSubmit}>
         <label>title</label>
         <input

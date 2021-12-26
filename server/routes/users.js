@@ -28,7 +28,7 @@ router.put("/:id", async (req, res) => {
           $set: req.body,
         },
         { new: true }
-      );
+      ).select("-password");
       res.status(200).json(updatedUser);
     } catch (err) {
       res.status(500).json(err);

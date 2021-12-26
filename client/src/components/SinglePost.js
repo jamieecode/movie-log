@@ -136,7 +136,7 @@ const SinglePost = () => {
         </StyledEdit>
       ) : (
         <StyledArticle>
-          {post.image && <img src={imageURL + post.image} />}
+          {post.image && <img src={imageURL + post.image} alt="post" />}
           <h2>{title}</h2>
           <p>written by {post.username}</p>
           <p>{content}</p>

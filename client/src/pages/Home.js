@@ -14,7 +14,6 @@ const StyledMainSection = styled.section`
   height: 25rem;
   display: flex;
   flex-direction: column;
-
   padding: 4em 0 0 4em;
   background: linear-gradient(
     to left,
@@ -25,9 +24,6 @@ const StyledMainSection = styled.section`
     #8fcea1
   );
 
-  div {
-    margin-bottn: 1;
-  }
   h1 {
     font-size: 2.2rem;
   }
